@@ -24,22 +24,22 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; // id: Long (PK)
+    private Long id;
 
     @Column(unique = true, nullable = false)
-    private String username; // username: String
+    private String username;
 
     @Column(nullable = false)
-    private String password; // password: String
+    private String password;
 
     @Column(nullable = false)
-    private String firstname; // firstname: String
+    private String firstname;
 
     @Column(nullable = false)
-    private String lastname; // lastname: String
+    private String lastname;
 
     @Column(unique = true, nullable = false)
-    private String email; // email: String
+    private String email;
 
     @Enumerated(EnumType.STRING) // Store enum as String in DB
     @Column(nullable = false)
@@ -47,5 +47,5 @@ public class User {
 
     // Relationships
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<LoginRecord> loginRecords; // 1..* User to 1 Login_records
+    private List<LoginRecord> loginRecords; // one instance of User ca be associated to many instances of loginRecords
 }

@@ -19,15 +19,15 @@ import java.time.LocalDateTime;
 public class LoginRecord {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; // id: Long (PK)
+    private Long id;
 
     @Column(nullable = false)
-    private LocalDateTime logIn; // log_in: DateTime
+    private LocalDateTime logIn;
 
-    private LocalDateTime logOut; // log_out: DateTime (nullable)
+    private LocalDateTime logOut;
 
     // Relationships
     @ManyToOne(fetch = FetchType.LAZY) // Many login records belong to one user
     @JoinColumn(name = "user_id", nullable = false) // Foreign key to User entity
-    private User user; // 1 Login_records to 1..* User
+    private User user;
 }

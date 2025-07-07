@@ -33,10 +33,10 @@ public class Subject {
 
     // Relationships
     @OneToMany(mappedBy = "subject", cascade = CascadeType.ALL)
-    private List<Enrollment> enrollments; // 1..* Enrollment to 1 Subjects
+    private List<Enrollment> enrollments;
 
     @OneToMany(mappedBy = "subject", cascade = CascadeType.ALL)
-    private List<Grade> grades; // 1..* Grades to 1 Subjects
+    private List<Grade> grades;
 
     @OneToMany(mappedBy = "subject", cascade = CascadeType.ALL)
     private List<ClassSubject> classSubjects; // Many-to-many relationship with Class via ClassSubject
