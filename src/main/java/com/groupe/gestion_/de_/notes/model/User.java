@@ -2,10 +2,7 @@ package com.groupe.gestion_.de_.notes.model;
 
 import com.groupe.gestion_.de_.notes.model.Role;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
+import lombok.*;
 import lombok.experimental.SuperBuilder; // For builder pattern with inheritance
 
 import java.util.List;
@@ -19,7 +16,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder // Allows subclasses to use builder from superclass
-
 public class User {
 
     @Id
@@ -40,6 +36,7 @@ public class User {
 
     @Column(unique = true, nullable = false)
     private String email;
+
 
     @Enumerated(EnumType.STRING) // Store enum as String in DB
     @Column(nullable = false)
