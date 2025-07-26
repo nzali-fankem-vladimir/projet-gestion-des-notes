@@ -307,6 +307,144 @@ async def get_current_user_info(current_user: dict = Depends(get_current_user)):
         created_at=current_user["created_at"]
     )
 
+# ===========================
+# ROUTES GESTION UTILISATEURS (Équivalent UserController.java)
+# ===========================
+
+@app.post("/api/admin/users/students", response_model=StudentResponse)
+async def register_student(
+    student_request: StudentCreate,
+    current_user: dict = Depends(require_role([RoleEnum.ADMIN]))
+):
+    """
+    Enregistrer un nouvel étudiant (équivalent à registerStudent)
+    Accessible uniquement aux administrateurs
+    """
+    # Vérifier l'unicité du nom d'utilisateur et email
+    if db.users.find_one({"username": student_request.username}):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Ce nom d'utilisateur existe déjà"
+        )
+    
+    if db.users.find_one({"email": student_request.email}):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Cette adresse email existe déjà"
+        )
+    
+    if db.users.find_one({"student_id_num": student_request.student_id_num}):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Ce numéro étudiant existe déjà"
+        )
+    
+    # Créer l'étudiant
+    student_id = str(uuid.uuid4())
+    student_data = {
+        "_id": student_id,
+        "username": student_request.username,
+        "password": get_password_hash(student_request.password),
+        "firstname": student_request.firstname,
+        "lastname": student_request.lastname,
+        "email": student_request.email,
+        "role": RoleEnum.STUDENT.value,
+        "student_id_num": student_request.student_id_num,
+        "created_at": datetime.utcnow()
+    }
+    
+    db.users.insert_one(student_data)
+    logger.info(f"Nouvel étudiant créé : {student_request.username}")
+    
+    return StudentResponse(
+        id=student_id,
+        username=student_request.username,
+        firstname=student_request.firstname,
+        lastname=student_request.lastname,
+        email=student_request.email,
+        role=RoleEnum.STUDENT,
+        student_id_num=student_request.student_id_num,
+        created_at=datetime.utcnow()
+    )
+
+@app.post("/api/admin/users/teachers", response_model=TeacherResponse)
+async def register_teacher(
+    teacher_request: TeacherCreate,
+    current_user: dict = Depends(require_role([RoleEnum.ADMIN]))
+):
+    """
+    Enregistrer un nouvel enseignant (équivalent à registerTeacher)
+    Accessible uniquement aux administrateurs
+    """
+    # Vérifier l'unicité
+    if db.users.find_one({"username": teacher_request.username}):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Ce nom d'utilisateur existe déjà"
+        )
+    
+    if db.users.find_one({"email": teacher_request.email}):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Cette adresse email existe déjà"
+        )
+    
+    if db.users.find_one({"teacher_id_num": teacher_request.teacher_id_num}):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Ce numéro enseignant existe déjà"
+        )
+    
+    # Créer l'enseignant
+    teacher_id = str(uuid.uuid4())
+    teacher_data = {
+        "_id": teacher_id,
+        "username": teacher_request.username,
+        "password": get_password_hash(teacher_request.password),
+        "firstname": teacher_request.firstname,
+        "lastname": teacher_request.lastname,
+        "email": teacher_request.email,
+        "role": RoleEnum.TEACHER.value,
+        "teacher_id_num": teacher_request.teacher_id_num,
+        "created_at": datetime.utcnow()
+    }
+    
+    db.users.insert_one(teacher_data)
+    logger.info(f"Nouvel enseignant créé : {teacher_request.username}")
+    
+    return TeacherResponse(
+        id=teacher_id,
+        username=teacher_request.username,
+        firstname=teacher_request.firstname,
+        lastname=teacher_request.lastname,
+        email=teacher_request.email,
+        role=RoleEnum.TEACHER,
+        teacher_id_num=teacher_request.teacher_id_num,
+        created_at=datetime.utcnow()
+    )
+
+@app.get("/api/admin/users", response_model=List[UserResponse])
+async def get_all_users(
+    current_user: dict = Depends(require_role([RoleEnum.ADMIN]))
+):
+    """
+    Obtenir tous les utilisateurs (équivalent à getAllUsers)
+    Accessible uniquement aux administrateurs
+    """
+    users = list(db.users.find({}))
+    return [
+        UserResponse(
+            id=str(user["_id"]),
+            username=user["username"],
+            firstname=user["firstname"],
+            lastname=user["lastname"],
+            email=user["email"],
+            role=user["role"],
+            created_at=user["created_at"]
+        )
+        for user in users
+    ]
+
 # Initialisation de l'admin par défaut
 @app.on_event("startup")
 async def create_default_admin():
