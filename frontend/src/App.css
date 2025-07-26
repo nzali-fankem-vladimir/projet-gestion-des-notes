@@ -1,0 +1,361 @@
+/* Styles spécifiques pour l'application de gestion des notes */
+
+/* Import des fonts Google Fonts pour une apparence moderne */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* Styles globaux pour l'application */
+.App {
+  text-align: center;
+}
+
+/* Styles pour les animations de transition */
+.page-transition-enter {
+  opacity: 0;
+  transform: translateX(20px);
+}
+
+.page-transition-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 300ms, transform 300ms;
+}
+
+.page-transition-exit {
+  opacity: 1;
+}
+
+.page-transition-exit-active {
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: opacity 300ms, transform 300ms;
+}
+
+/* Styles pour le loading spinner personnalisé */
+.custom-spinner {
+  animation: spin 1s linear infinite;
+  border: 2px solid #e5e7eb;
+  border-top: 2px solid #3b82f6;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+}
+
+/* Styles pour les cartes de statistiques */
+.stats-card {
+  @apply bg-white rounded-lg shadow-sm border border-gray-200 p-6 transition-all duration-200;
+}
+
+.stats-card:hover {
+  @apply shadow-md transform -translate-y-1;
+}
+
+.stats-number {
+  @apply text-3xl font-bold text-gray-900 mb-1;
+}
+
+.stats-label {
+  @apply text-sm font-medium text-gray-500 uppercase tracking-wide;
+}
+
+.stats-icon {
+  @apply w-8 h-8 text-blue-600;
+}
+
+/* Styles pour les graphiques personnalisés */
+.chart-wrapper {
+  @apply bg-white rounded-lg shadow-sm border border-gray-200 p-6;
+}
+
+.chart-title {
+  @apply text-lg font-semibold text-gray-900 mb-4;
+}
+
+.chart-subtitle {
+  @apply text-sm text-gray-600 mb-6;
+}
+
+/* Styles pour les tableaux de données */
+.data-table {
+  @apply w-full bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden;
+}
+
+.table-header {
+  @apply bg-gray-50 border-b border-gray-200;
+}
+
+.table-header th {
+  @apply px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider;
+}
+
+.table-row {
+  @apply border-b border-gray-200 hover:bg-gray-50 transition-colors duration-150;
+}
+
+.table-cell {
+  @apply px-6 py-4 whitespace-nowrap text-sm text-gray-900;
+}
+
+/* Styles pour les formulaires */
+.form-container {
+  @apply bg-white rounded-lg shadow-sm border border-gray-200 p-6;
+}
+
+.form-title {
+  @apply text-xl font-semibold text-gray-900 mb-6;
+}
+
+.form-group {
+  @apply mb-4;
+}
+
+.form-label {
+  @apply block text-sm font-medium text-gray-700 mb-2;
+}
+
+.form-input-group {
+  @apply relative;
+}
+
+.form-error {
+  @apply mt-1 text-sm text-red-600;
+}
+
+.form-help-text {
+  @apply mt-1 text-sm text-gray-500;
+}
+
+/* Styles pour les modales */
+.modal-backdrop {
+  @apply fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity duration-300;
+}
+
+.modal-container {
+  @apply fixed inset-0 z-50 flex items-center justify-center p-4;
+}
+
+.modal-content {
+  @apply bg-white rounded-lg shadow-xl max-w-md w-full max-h-96 overflow-y-auto 
+         transform transition-all duration-300;
+}
+
+.modal-header {
+  @apply flex justify-between items-center p-6 border-b border-gray-200;
+}
+
+.modal-title {
+  @apply text-lg font-semibold text-gray-900;
+}
+
+.modal-body {
+  @apply p-6;
+}
+
+.modal-footer {
+  @apply flex justify-end space-x-3 p-6 border-t border-gray-200;
+}
+
+/* Styles pour les badges et étiquettes */
+.badge-container {
+  @apply inline-flex items-center space-x-2;
+}
+
+.role-badge {
+  @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+}
+
+.role-student {
+  @apply bg-blue-100 text-blue-800;
+}
+
+.role-teacher {
+  @apply bg-green-100 text-green-800;
+}
+
+.role-admin {
+  @apply bg-purple-100 text-purple-800;
+}
+
+.grade-badge {
+  @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+}
+
+.grade-excellent {
+  @apply bg-green-100 text-green-800;
+}
+
+.grade-good {
+  @apply bg-blue-100 text-blue-800;
+}
+
+.grade-average {
+  @apply bg-yellow-100 text-yellow-800;
+}
+
+.grade-poor {
+  @apply bg-red-100 text-red-800;
+}
+
+/* Styles pour les actions rapides */
+.action-buttons {
+  @apply flex space-x-2;
+}
+
+.action-button {
+  @apply inline-flex items-center px-3 py-1.5 text-sm font-medium rounded-md 
+         transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2;
+}
+
+.action-edit {
+  @apply bg-blue-100 text-blue-700 hover:bg-blue-200 focus:ring-blue-500;
+}
+
+.action-delete {
+  @apply bg-red-100 text-red-700 hover:bg-red-200 focus:ring-red-500;
+}
+
+.action-view {
+  @apply bg-gray-100 text-gray-700 hover:bg-gray-200 focus:ring-gray-500;
+}
+
+/* Styles pour les notifications personnalisées */
+.notification-success {
+  @apply bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-md;
+}
+
+.notification-error {
+  @apply bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-md;
+}
+
+.notification-warning {
+  @apply bg-yellow-50 border border-yellow-200 text-yellow-800 px-4 py-3 rounded-md;
+}
+
+.notification-info {
+  @apply bg-blue-50 border border-blue-200 text-blue-800 px-4 py-3 rounded-md;
+}
+
+/* Styles pour l'affichage responsive */
+@media (max-width: 640px) {
+  .stats-card {
+    @apply p-4;
+  }
+  
+  .stats-number {
+    @apply text-2xl;
+  }
+  
+  .chart-wrapper {
+    @apply p-4;
+  }
+  
+  .form-container {
+    @apply p-4;
+  }
+  
+  .table-cell {
+    @apply px-3 py-2;
+  }
+  
+  .action-buttons {
+    @apply flex-col space-x-0 space-y-1;
+  }
+}
+
+/* Styles pour l'impression */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  .print-break {
+    page-break-after: always;
+  }
+  
+  .print-header {
+    @apply text-center mb-8;
+  }
+  
+  .print-title {
+    @apply text-2xl font-bold text-gray-900 mb-2;
+  }
+  
+  .print-subtitle {
+    @apply text-lg text-gray-600;
+  }
+  
+  body {
+    @apply bg-white text-black;
+  }
+  
+  .stats-card,
+  .chart-wrapper,
+  .form-container,
+  .data-table {
+    @apply shadow-none border border-gray-300;
+  }
+}
+
+/* Animation pour les éléments qui apparaissent */
+.fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Styles pour les indicateurs de progression */
+.progress-bar {
+  @apply w-full bg-gray-200 rounded-full h-2;
+}
+
+.progress-fill {
+  @apply bg-blue-600 h-2 rounded-full transition-all duration-300 ease-out;
+}
+
+/* Styles pour les onglets */
+.tab-list {
+  @apply flex border-b border-gray-200;
+}
+
+.tab-button {
+  @apply px-4 py-2 text-sm font-medium text-gray-500 hover:text-gray-700 
+         border-b-2 border-transparent hover:border-gray-300 
+         transition-colors duration-200;
+}
+
+.tab-button.active {
+  @apply text-blue-600 border-blue-600;
+}
+
+.tab-content {
+  @apply mt-4;
+}
+
+/* Styles pour les alertes */
+.alert {
+  @apply p-4 rounded-md mb-4;
+}
+
+.alert-success {
+  @apply bg-green-50 border border-green-200 text-green-800;
+}
+
+.alert-error {
+  @apply bg-red-50 border border-red-200 text-red-800;
+}
+
+.alert-warning {
+  @apply bg-yellow-50 border border-yellow-200 text-yellow-800;
+}
+
+.alert-info {
+  @apply bg-blue-50 border border-blue-200 text-blue-800;
+}
